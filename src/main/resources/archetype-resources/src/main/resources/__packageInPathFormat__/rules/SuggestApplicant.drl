@@ -1,0 +1,31 @@
+package com.example.droolsapp1.rules;
+
+import com.example.droolsapp1.model.Applicant;
+
+global com.example.droolsapp1.model.SuggestedRole suggestedRole;
+
+dialect "mvel"
+
+rule "Suggest Manager Role rule"
+	when 
+		Applicant(experienceInYears > 10)
+		Applicant(salary > 1000000 && salary <= 2500000)
+	then
+		suggestedRole.setRole("Manager");
+end
+
+rule "Suggest SeniorDeveloper rule"
+	when 
+		Applicant(experienceInYears > 5 && experienceInYears <= 10)
+		Applicant(salary > 500000 && salary <= 1500000 )
+	then 
+		suggestedRole.setRole("SeniorDeveloper");
+end
+
+rule "Suggest Developer Role rule"
+	when 
+		Applicant(experienceInYears >= 0 && experienceInYears <= 5)
+		Applicant(salary > 200000 && salary < 1000000)
+	then 
+		suggestedRole.setRole("Developer")
+end
